@@ -1,11 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Body from "./Body"
-import LogIn from "./LogIn"
+import LogIn from "./Login"
 import Profile from "./Profile"
-import SignUp from "./SignUp"
 import { Provider } from "react-redux"
 import appStore from "./utils/appStore"
 import Feed from "./Feed"
+import Connections from "./Connections"
+import Requests from "./Requests"
 
 
 function App() {
@@ -13,20 +14,21 @@ function App() {
 
   return (
     <>
- <Provider store={appStore}>
-    <BrowserRouter basename="/">
-      <Routes>
+      <Provider store={appStore}>
+        <BrowserRouter basename="/">
+          <Routes>
 
-        <Route path="/" element={<Body/>}>
-        <Route path="/login" element={<LogIn/>}/>
-        <Route path="/feed" element={<Feed/>}/>
-        <Route path="/Signup" element={<SignUp/>}/>
-        <Route path="/profile" element={<Profile/>}/>
+            <Route path="/" element={<Body />}>
+              <Route path="/login" element={<LogIn />} />
+              <Route path="/" element={<Feed />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/connections" element={<Connections />} />
+              <Route path="/requests" element={<Requests />} />
 
-        </Route>
-      </Routes>
-    </BrowserRouter>
-    </Provider>
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </Provider>
     </>
   )
 }
