@@ -50,7 +50,7 @@ const LogIn = () => {
   }, [])
 
   return (
-    <div className="flex justify-center mt-[10vh]">
+    <div className={`flex justify-center  ${isLoginForm ? "md:mt-[15vh] mt-[15vh] " : "md:mt-[10vh]   "} `}>
       <div className="card bg-base-100 w-96 shadow-xl ">
         <div className="card-body">
           <h2 className="card-title  justify-center mb-8">{isLoginForm ? "Log In" : "Sign Up"}</h2>
