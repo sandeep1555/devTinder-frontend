@@ -58,7 +58,11 @@ const Requests = () => {
                                 </div>
 
                                 <div className="card-body ml-[-30px]">
-                                    <h2 className="card-title">{firstName + " " + lastName}{age && <span>{"," + age}</span>}{gender && <span>{"(" + gender[0] + ")"}</span>}</h2>
+                                    <h2 className="card-title">
+                                        {`${firstName} ${lastName}`}
+                                        {age && `, ${age}`}
+                                        {gender && ` (${gender[0]})`}
+                                    </h2>
                                     <p>{about}</p>
                                     <div className="flex ">
                                         <button className="mr-2  btn btn-success" onClick={() => approveRequest("accepted", request._id)}>Accept</button>
@@ -73,7 +77,7 @@ const Requests = () => {
                     </>)
 
 
-            }) : <div className='flex justify-center '>
+            }) : <div className='flex justify-center'>
                 <div className="card bg-base-100 w-96 shadow-xl">
                     <div className="card-body">
                         <h2 className="card-title text-center px-20">No Requests Found</h2>

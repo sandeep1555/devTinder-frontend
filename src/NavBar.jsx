@@ -34,9 +34,14 @@ const NavBar = () => {
 
 
 
-        {user && <> <button className="font-bold  hover:text-gray-600 mr-2" onClick={() => navigate("/requests")}>Requests</button>
+        {user && <>
 
-          <button className="font-bold  hover:text-gray-600 mr-2" onClick={() => navigate("/connections")}>Connections</button>
+          <button className="font-bold text-sm  hover:text-gray-600 mr-1  md:text-lg md:mr-6" onClick={() => navigate("/")}>Home</button>
+
+          <button className="font-bold  hover:text-gray-600 text-sm mr-1 md:text-lg md:mr-6" onClick={() => navigate("/requests")}>Requests</button>
+
+          <button className="font-bold  hover:text-gray-600 text-sm mr-1 md:text-lg md:mr-6" onClick={() => navigate("/connections")}>Connections</button>
+
 
 
 

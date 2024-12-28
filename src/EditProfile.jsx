@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { BASE_URL } from "./utils/constants";
 import { addUser } from "./utils/userSlice";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -17,6 +18,7 @@ const EditProfile = ({ user }) => {
     const [age, setAge] = useState(user.age);
     const [skills, setSkills] = useState(user.skills);
     const [about, setAbout] = useState(user.about);
+    const navigate = useNavigate();
 
     const [error, setError] = useState("")
     const [showToast, setShowToast] = useState(false)
@@ -39,6 +41,7 @@ const EditProfile = ({ user }) => {
             setTimeout(() => {
                 setShowToast(false)
             }, 3000)
+
         }
         catch (err) {
             errorField.forEach(field => {
@@ -58,7 +61,7 @@ const EditProfile = ({ user }) => {
 
 
         <div className="md:flex md:justify-center md:my-16 mt-12 mb-24 overflow-y-scroll ">
-            <div className="card bg-base-100 w-96 shadow-xl  mx-8 mb-10">
+            <div className='card bg-base-100 w-96 shadow-xl   mb-10  md:mx-8 mx-1 '>
                 <div className="card-body">
                     <h2 className="card-title  justify-center mb-8">Edit Profile</h2>
                     <div>

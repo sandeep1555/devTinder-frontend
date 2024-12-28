@@ -7,8 +7,8 @@ import { BASE_URL } from "./utils/constants";
 
 
 const LogIn = () => {
-  const [password, setPassword] = useState("");
-  const [emailId, setemailId] = useState("");
+  const [password, setPassword] = useState("Sandeep@123");
+  const [emailId, setemailId] = useState("sandeep@gmail.com");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [error, setError] = useState("");
@@ -88,7 +88,7 @@ const LogIn = () => {
               <div className="label">
                 <span className="label-text">Password:</span>
               </div>
-              <input type="text" placeholder="password" className="input input-bordered w-full max-w-xs " onChange={(e) => setPassword(e.target.value)} value={password} />
+              <input type="password" placeholder="password" className="input input-bordered w-full max-w-xs " onChange={(e) => setPassword(e.target.value)} value={password} />
             </label>
 
 

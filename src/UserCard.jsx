@@ -25,16 +25,16 @@ const UserCard = ({ user, disabled }) => {
   const toggleText = () => {
     setIsTruncated(!isTruncated);
   };
-  console.log(skills)
+
 
 
   return (
 
-    <div className="card  bg-base-100 w-96 shadow-xl mx-8 my-10 md:mt-0">
+    <div className="card  bg-base-100 w-96 shadow-xl mx-1 md:my-10 my-5 md:mt-0">
       <figure>
         <img className={disabled ? "h-[520px]" : "h-[450px]"}
-          src={photoURL}
-          alt="Shoes" />
+          src={photoURL ? photoURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqafzhnwwYzuOTjTlaYMeQ7hxQLy_Wq8dnQg&s"}
+          alt="photo" />
       </figure>
       <div className="card-body">
         <h2 className="card-title">
