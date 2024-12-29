@@ -39,7 +39,7 @@ const EditProfile = ({ user }) => {
                 skills: skills,
                 about: about
 
-            }, { withCredentials: true })
+            })
 
             dispatch(addUser(res.data.data))
             setShowToast(true)
