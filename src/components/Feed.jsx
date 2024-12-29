@@ -1,8 +1,8 @@
 import axios from "axios"
-import { BASE_URL } from "./utils/constants"
+import { BASE_URL } from "../utils/constants"
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addFeed } from "./utils/feedSlice";
+import { addFeed } from "../utils/feedSlice";
 import UserCard from "./UserCard";
 import { useNavigate } from "react-router-dom";
 
@@ -32,7 +32,7 @@ const Feed = () => {
   if (feedData.length <= 0) return <h1 className="text-center mt-10">no new users found</h1>
 
   return (
-    <div className="flex justify-center md:my-10 my-4  ">
+    <div className="flex justify-center md:my-10 my-[-10px]">
       {feedData && <UserCard user={feedData[0]} disabled={false} />}
     </div>
   )

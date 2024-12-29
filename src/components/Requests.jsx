@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { BASE_URL } from "./utils/constants";
+import { BASE_URL } from "../utils/constants";
 import axios from "axios";
-import { addRequests, removeRequests } from "./utils/requestsSlice";
+import { addRequests, removeRequests } from "../utils/requestsSlice";
 import { useEffect } from "react";
 
 
@@ -78,9 +78,9 @@ const Requests = () => {
 
 
             }) : <div className='flex justify-center'>
-                <div className="card bg-base-100 w-96 shadow-xl">
-                    <div className="card-body">
-                        <h2 className="card-title text-center px-20">No Requests Found</h2>
+                <div className="card bg-base-100 md:w-1/2 w-full mx-4  shadow-xl">
+                    <div className="card-body flex justify-center items-center">
+                        <h2 className="card-title text-center ">No Requests Found</h2>
 
                     </div>
                 </div>

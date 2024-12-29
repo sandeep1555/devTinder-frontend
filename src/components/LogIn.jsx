@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "./utils/userSlice";
+import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "./utils/constants";
+import { BASE_URL } from "../utils/constants";
+import ErrorIcon from '../assets/icons/error-icon.png';
+
 
 
 const LogIn = () => {
@@ -12,28 +14,35 @@ const LogIn = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [error, setError] = useState("");
-  const [isLoginForm, setIsLoginForm] = useState(true);
+  const [isLoginForm, setIsLoginForm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const naviagte = useNavigate();
   const user = useSelector((store) => store.user)
+
+
+
   const handleLogInButton = async () => {
+    setError("")
+    setIsLoading(true);
     try {
-
-
       const res = await axios.post(BASE_URL + "/login", { emailId, password }, { withCredentials: true })
       dispatch(addUser(res.data.data))
       naviagte("/")
-
-
-
     }
     catch (err) {
       setError(err.response.data || "something went wrong")
       console.log(err)
 
     }
+    finally {
+      setIsLoading(false)
+    }
   }
+
   const handleSignUpButton = async () => {
+    setError("")
+    setIsLoading(true)
     try {
       const res = await axios.post(BASE_URL + "/signup", { firstName, lastName, emailId, password }, { withCredentials: true })
       dispatch(addUser(res.data.data))
@@ -42,6 +51,9 @@ const LogIn = () => {
     catch (err) {
       setError(err.response.data || "something went wrong")
       console.log(err)
+    }
+    finally {
+      setIsLoading(false)
     }
   }
 
@@ -93,9 +105,14 @@ const LogIn = () => {
 
 
           </div>
-          <p className="text-red-500">{error}</p>
-          <div className="card-actions justify-center">
-            <button className="btn btn-primary px-8" onClick={isLoginForm ? handleLogInButton : handleSignUpButton}>{isLoginForm ? "LogIn" : "SignUp"}</button>
+          {error && (
+            <p className="text-red-500 flex items-center mb-4">
+              <img src={ErrorIcon} alt="Error Icon" className="w-4 h-4 mr-1" />
+              {error}
+            </p>
+          )}          <div className="card-actions justify-center">
+            <button className="btn btn-primary px-8" onClick={isLoginForm ? handleLogInButton : handleSignUpButton}>{isLoading ? <span className={`loading loading-spinner loading-md ${isLoginForm ? "mx-[6px]": "mx-[13px]"}`}></span> : isLoginForm ? "LogIn" : "Sign Up"}</button>
+
           </div>
           <p className="my-2">{isLoginForm ? "new user," : "already have account,"}<span className="underline text-blue-500 cursor-pointer" onClick={() => { setIsLoginForm(!isLoginForm); setemailId(""); setPassword(""); setFirstName(""); setLastName(""); setError("") }}>{isLoginForm ? "sign Up" : "LogIn"}</span></p>
         </div>

@@ -1,7 +1,7 @@
 import axios from "axios";
-import { BASE_URL } from "./utils/constants";
+import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
-import { removeFeed } from "./utils/feedSlice";
+import { removeFeed } from "../utils/feedSlice";
 import { useState } from "react";
 
 
@@ -30,7 +30,7 @@ const UserCard = ({ user, disabled }) => {
 
   return (
 
-    <div className={`card  bg-base-100 w-96 shadow-xl ${!disabled ? "mx-3" : "mx-1"} md:my-10 my-5 md:mt-0 `}>
+    <div className={`card  bg-base-100  shadow-xl ${!disabled ? "mx-3 w-96" : "mx-1 w-96"} md:my-10 my-5 md:mt-0 `}>
       <figure>
         <img className={disabled ? "h-[520px]" : "h-[450px]"}
           src={photoURL ? photoURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqafzhnwwYzuOTjTlaYMeQ7hxQLy_Wq8dnQg&s"}

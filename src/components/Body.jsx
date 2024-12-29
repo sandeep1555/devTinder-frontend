@@ -2,10 +2,10 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 import NavBar from './NavBar'
 import axios from 'axios'
-import { BASE_URL } from './utils/constants'
+import { BASE_URL } from '../utils/constants'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addUser } from './utils/userSlice'
+import { addUser } from '../utils/userSlice'
 import Footer from './Footer'
 
 const Body = () => {

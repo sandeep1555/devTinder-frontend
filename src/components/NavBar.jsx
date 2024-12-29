@@ -2,11 +2,11 @@
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom';
-import { BASE_URL } from './utils/constants';
-import { removeUser } from './utils/userSlice';
-import { removeConnections } from './utils/connectionsSlice';
-import { resetFeed } from './utils/feedSlice';
-import { resetRequest } from './utils/requestsSlice';
+import { BASE_URL } from '../utils/constants';
+import { removeUser } from '../utils/userSlice';
+import { removeConnections } from '../utils/connectionsSlice';
+import { resetFeed } from '../utils/feedSlice';
+import { resetRequest } from '../utils/requestsSlice';
 
 const NavBar = () => {
 
@@ -26,7 +26,7 @@ const NavBar = () => {
 
 
   return (
-    <div className="navbar bg-base-300 ">
+    <div className="navbar bg-base-300  ">
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost text-xl">DevTinder</Link>
       </div>
@@ -38,7 +38,7 @@ const NavBar = () => {
 
           <button className="font-bold text-sm  hover:text-gray-600 mr-1  md:text-lg md:mr-6" onClick={() => navigate("/")}>Home</button>
 
-          <button className="font-bold  hover:text-gray-600 text-sm mr-1 md:text-lg md:mr-6" onClick={() => navigate("/requests")}>Requests</button>
+          <button className="font-bold  hover:text-gray-600 text-sm mr-1 md:text-lg md:mr-6  md:block hidden" onClick={() => navigate("/requests")}>Requests</button>
 
           <button className="font-bold  hover:text-gray-600 text-sm mr-1 md:text-lg md:mr-6" onClick={() => navigate("/connections")}>Connections</button>
 

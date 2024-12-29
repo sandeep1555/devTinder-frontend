@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { BASE_URL } from './utils/constants'
+import { BASE_URL } from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
-import { addConnections } from './utils/connectionsSlice'
+import { addConnections } from '../utils/connectionsSlice'
 import UserCard from './UserCard'
 
 const Connections = () => {
@@ -82,12 +82,12 @@ const Connections = () => {
                 })
             ) : (
                 <div className='flex justify-center'>
-                    <div className="card bg-base-100 w-96 shadow-xl">
-                        <div className="card-body">
-                            <h2 className="card-title text-center px-20">No Connections Found</h2>
+                <div className="card bg-base-100 md:w-1/2 w-full mx-4  shadow-xl">
+                    <div className="card-body flex justify-center items-center">
+                        <h2 className="card-title text-center ">No Connections Found</h2>
 
-                        </div>
                     </div>
+                </div>
                 </div>
             ))}
         </div>
