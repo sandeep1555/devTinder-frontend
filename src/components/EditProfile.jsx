@@ -5,6 +5,7 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../context/AuthInterceptor";
 
 
 
@@ -29,7 +30,7 @@ const EditProfile = ({ user }) => {
         setError("")
         setIsLoading(true)
         try {
-            const res = await axios.patch(BASE_URL + "/profile/edit", {
+            const res = await axiosInstance.patch(BASE_URL + "/profile/edit", {
                 firstName: firstName,
                 lastName: lastName,
                 photoURL: photoURL,
