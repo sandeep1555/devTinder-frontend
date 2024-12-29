@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
 import UserCard from "./UserCard";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../context/AuthInterceptor";
 
 
 const Feed = () => {
@@ -15,7 +16,7 @@ const Feed = () => {
   const handleFeedData = async () => {
 
     try {
-      const res = await axios.get(BASE_URL + "/user/feed", { withCredentials: true });
+      const res = await axiosInstance.get(BASE_URL + "/user/feed", { withCredentials: true });
       dispatch(addFeed(res.data));
 
     }

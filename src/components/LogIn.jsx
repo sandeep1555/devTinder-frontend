@@ -5,6 +5,7 @@ import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import ErrorIcon from '../assets/icons/error-icon.png';
+import { useAuth } from "../context/AuthContext";
 
 
 
@@ -17,8 +18,9 @@ const LogIn = () => {
   const [isLoginForm, setIsLoginForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
   const user = useSelector((store) => store.user)
+  const { logIn, authToken } = useAuth();
 
 
 
@@ -27,8 +29,10 @@ const LogIn = () => {
     setIsLoading(true);
     try {
       const res = await axios.post(BASE_URL + "/login", { emailId, password }, { withCredentials: true })
-      dispatch(addUser(res.data.data))
-      naviagte("/")
+      dispatch(addUser(res?.data?.data))
+      logIn(res?.data?.token);
+      navigate("/")
+
     }
     catch (err) {
       setError(err.response.data || "something went wrong")
@@ -46,7 +50,8 @@ const LogIn = () => {
     try {
       const res = await axios.post(BASE_URL + "/signup", { firstName, lastName, emailId, password }, { withCredentials: true })
       dispatch(addUser(res.data.data))
-      naviagte("/profile")
+      logIn(res?.data?.token);
+      navigate("/profile")
     }
     catch (err) {
       setError(err.response.data || "something went wrong")
@@ -58,8 +63,8 @@ const LogIn = () => {
   }
 
   useEffect(() => {
-    user && naviagte("/")
-  }, [])
+    authToken &&  navigate("/");
+  }, [authToken]);
 
   return (
     <div className={`flex justify-center  ${isLoginForm ? "md:mt-[15vh] mt-[5vh] " : "md:mt-[10vh]   "} `}>
@@ -106,12 +111,12 @@ const LogIn = () => {
 
           </div>
           {error && (
-            <p className="text-red-500 flex items-center mb-4">
+            <p className="text-red-500 flex items-center">
               <img src={ErrorIcon} alt="Error Icon" className="w-4 h-4 mr-1" />
               {error}
             </p>
           )}          <div className="card-actions justify-center">
-            <button className="btn btn-primary px-8" onClick={isLoginForm ? handleLogInButton : handleSignUpButton}>{isLoading ? <span className={`loading loading-spinner loading-md ${isLoginForm ? "mx-[6px]": "mx-[13px]"}`}></span> : isLoginForm ? "LogIn" : "Sign Up"}</button>
+            <button className="btn btn-primary px-8 my-4" onClick={isLoginForm ? handleLogInButton : handleSignUpButton}>{isLoading ? <span className={`loading loading-spinner loading-md ${isLoginForm ? "mx-[6px]": "mx-[13px]"}`}></span> : isLoginForm ? "LogIn" : "Sign Up"}</button>
 
           </div>
           <p className="my-2">{isLoginForm ? "new user," : "already have account,"}<span className="underline text-blue-500 cursor-pointer" onClick={() => { setIsLoginForm(!isLoginForm); setemailId(""); setPassword(""); setFirstName(""); setLastName(""); setError("") }}>{isLoginForm ? "sign Up" : "LogIn"}</span></p>

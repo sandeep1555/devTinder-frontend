@@ -7,12 +7,15 @@ import { removeUser } from '../utils/userSlice';
 import { removeConnections } from '../utils/connectionsSlice';
 import { resetFeed } from '../utils/feedSlice';
 import { resetRequest } from '../utils/requestsSlice';
+import { useAuth } from '../context/AuthContext';
 
 const NavBar = () => {
 
   const user = useSelector((store) => store.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { logOut } = useAuth();
+
 
   const handleLogout = async () => {
     await axios.post(BASE_URL + "/logout", {}, { withCredentials: true })
@@ -20,6 +23,7 @@ const NavBar = () => {
     dispatch(removeConnections());
     dispatch(resetFeed());
     dispatch(resetRequest());
+    logOut();
     navigate("/login")
 
   }
