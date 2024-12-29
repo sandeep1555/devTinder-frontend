@@ -18,12 +18,16 @@ const EditProfile = ({ user }) => {
     const [age, setAge] = useState(user.age);
     const [skills, setSkills] = useState(user.skills);
     const [about, setAbout] = useState(user.about);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const [error, setError] = useState("")
     const [showToast, setShowToast] = useState(false)
+
     const editProfile = async () => {
+
         setError("")
+        setIsLoading(true)
         try {
             const res = await axios.patch(BASE_URL + "/profile/edit", {
                 firstName: firstName,
@@ -52,6 +56,9 @@ const EditProfile = ({ user }) => {
             });
             console.log(err);
         }
+        finally {
+            setIsLoading(false);
+        }
 
     }
 
@@ -61,7 +68,7 @@ const EditProfile = ({ user }) => {
 
 
         <div className="md:flex md:justify-center md:items-center flex-row justify-center items-center md:my-16 mt-12 mb-10 overflow-y-scroll  ">
-            
+
             <div className='card bg-base-100 w-96 shadow-xl    mb-10  md:mx-8 mx-1 '>
                 <div className="card-body">
                     <h2 className="card-title  justify-center mb-8">Edit Profile</h2>
@@ -132,7 +139,7 @@ const EditProfile = ({ user }) => {
                     </div>
                     <p className="text-red-500">{error}</p>
                     <div className="card-actions justify-center">
-                        <button className="btn btn-primary px-8" onClick={editProfile}>Save Profile</button>
+                        <button className="btn btn-primary px-8" onClick={editProfile}>{isLoading ? <span className="loading loading-spinner loading-md mx-[27px]"></span> : "Save Profile"}</button>
                     </div>
                 </div>
                 {showToast && <div className="toast toast-top toast-end mt-14 z-10">

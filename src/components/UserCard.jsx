@@ -6,19 +6,30 @@ import { useState } from "react";
 
 
 const UserCard = ({ user, disabled }) => {
+  const [isRequestLoading, setIsRequestLoading] = useState(false);
+  const [isIgnoreLoading, setIsIgnoreLoading] = useState(false);
   const dispatch = useDispatch();
 
   const { firstName, lastName, photoURL, age, skills, about, _id, gender } = user;
 
 
   const [isTruncated, setIsTruncated] = useState(true)
+
+
   const handleSendRequest = async (status, userId) => {
+
+    setIsRequestLoading(status === "interested");
+    setIsIgnoreLoading(status === "ignored");
     try {
       const res = await axios.post(BASE_URL + "/request/send/" + status + "/" + userId, {}, { withCredentials: true })
       dispatch(removeFeed(userId))
     }
     catch (err) {
       console.log(err)
+    }
+    finally {
+      setIsRequestLoading(false)
+      setIsIgnoreLoading(false)
     }
   }
 
@@ -33,7 +44,7 @@ const UserCard = ({ user, disabled }) => {
     <div className={`card  bg-base-100  shadow-xl ${!disabled ? "mx-3 w-96" : "mx-1 w-96"} md:my-10 my-5 md:mt-0 `}>
       <figure>
         <img className={disabled ? "h-[520px]" : "h-[450px]"}
-          src={photoURL ? photoURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqafzhnwwYzuOTjTlaYMeQ7hxQLy_Wq8dnQg&s"}
+          src={photoURL && photoURL}
           alt="photo" />
       </figure>
       <div className="card-body">
@@ -60,8 +71,8 @@ const UserCard = ({ user, disabled }) => {
           </span>
         )}
         <div className="card-actions justify-end">
-          {!disabled && <><button className="btn btn-primary" onClick={() => handleSendRequest("ignored", _id)}>ignore</button>
-            <button className="btn btn-primary bg-black text-white" onClick={() => handleSendRequest("interested", _id)}>send Request</button></>}
+          {!disabled && <><button className="btn btn-primary" onClick={() => handleSendRequest("ignored", _id)}>{isIgnoreLoading ? <span className="loading loading-spinner loading-md mx-[9px]"></span> : "ignore"}</button>
+            <button className="btn btn-primary bg-black text-white" onClick={() => handleSendRequest("interested", _id)}>{isRequestLoading ? <span className="loading loading-spinner loading-md  mx-[32px]"></span> : "send Request"}</button></>}
         </div>
       </div>
     </div>
