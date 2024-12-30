@@ -20,7 +20,7 @@ const LogIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user)
-  const { logIn, authToken } = useAuth();
+  // const { logIn, authToken } = useAuth();
 
 
 
@@ -30,7 +30,7 @@ const LogIn = () => {
     try {
       const res = await axios.post(BASE_URL + "/login", { emailId, password }, { withCredentials: true })
       dispatch(addUser(res?.data?.data))
-      logIn(res?.data?.token);
+      // logIn(res?.data?.token);
       navigate("/")
 
     }
@@ -63,8 +63,8 @@ const LogIn = () => {
   }
 
   useEffect(() => {
-    authToken &&  navigate("/");
-  }, [authToken]);
+    user &&  navigate("/");
+  }, [user]);
 
   return (
     <div className={`flex justify-center  ${isLoginForm ? "md:mt-[15vh] mt-[5vh] " : "md:mt-[10vh]   "} `}>
