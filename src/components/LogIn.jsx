@@ -5,7 +5,7 @@ import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import ErrorIcon from '../assets/icons/error-icon.png';
-import { useAuth } from "../context/AuthContext";
+// import { useAuth } from "../context/AuthContext";
 
 
 
@@ -50,7 +50,7 @@ const LogIn = () => {
     try {
       const res = await axios.post(BASE_URL + "/signup", { firstName, lastName, emailId, password }, { withCredentials: true })
       dispatch(addUser(res.data.data))
-      logIn(res?.data?.token);
+      // logIn(res?.data?.token);
       navigate("/profile")
     }
     catch (err) {
