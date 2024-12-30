@@ -49,7 +49,7 @@ const Requests = () => {
                 return (
                     <>
                         <div key={request._id} className='flex justify-center  '>
-                            <div className="card card-side bg-base-100 shadow-xl  w-[500px] my-2">
+                            <div className="card card-side bg-base-100 shadow-xl  w-[600px] my-2">
 
                                 <div className="avatar h-[100px] my-4 mx-2">
                                     <div className="w-24 rounded-full">
@@ -65,8 +65,8 @@ const Requests = () => {
                                     </h2>
                                     <p>{about}</p>
                                     <div className="flex ">
-                                        <button className="mr-2  btn btn-success" onClick={() => approveRequest("accepted", request._id)}>Accept</button>
-                                        <button className="btn btn-warning mr-2 " onClick={() => approveRequest("rejected", request._id)}>Reject</button>
+                                        <button className="mr-2  btn bg-black text-white" onClick={() => approveRequest("accepted", request._id)}>Accept</button>
+                                        <button className="btn btn-secondary mr-2 " onClick={() => approveRequest("rejected", request._id)}>Reject</button>
                                     </div>
 
                                 </div>
