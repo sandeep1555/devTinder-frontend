@@ -51,7 +51,7 @@ const Connections = () => {
                                         <img src={photoURL} />
                                     </div>
                                 </div>
-                                <div className="card-body ml-[-30px]">
+                                <div className="card-body ml-[-30px] mt-[-10px]">
                                     <h2 className="card-title">
                                         {`${firstName} ${lastName}`}
                                         {age && `, ${age}`}

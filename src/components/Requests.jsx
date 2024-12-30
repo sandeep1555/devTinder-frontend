@@ -48,16 +48,16 @@ const Requests = () => {
                 const { firstName, lastName, photoURL, age, gender, about } = request.fromUserId;
                 return (
                     <>
-                        <div key={request._id} className='flex justify-center  '>
+                        <div key={request._id} className='flex justify-center items-center  '>
                             <div className="card card-side bg-base-100 shadow-xl  w-[600px] my-2">
 
-                                <div className="avatar h-[100px] my-4 mx-2">
+                                <div className="avatar h-[100px]  my-4 mx-2">
                                     <div className="w-24 rounded-full">
                                         <img src={photoURL} />
                                     </div>
                                 </div>
 
-                                <div className="card-body ml-[-30px]">
+                                <div className="card-body ml-[-30px] mt-[-15px]">
                                     <h2 className="card-title">
                                         {`${firstName} ${lastName}`}
                                         {age && `, ${age}`}
