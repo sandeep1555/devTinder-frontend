@@ -32,7 +32,7 @@ const Connections = () => {
     }
 
     useEffect(() => {
-        viewConnections()
+       !connections && viewConnections()
     }, [])
 
     console.log(selectedUser)

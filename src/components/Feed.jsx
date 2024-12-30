@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
 import UserCard from "./UserCard";
-import { useNavigate } from "react-router-dom";
 import axiosInstance from "../context/AuthInterceptor";
 
 
@@ -12,7 +11,6 @@ const Feed = () => {
   const feedData = useSelector((store) => store.feed);
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user)
-  const navigate = useNavigate();
   const handleFeedData = async () => {
 
     try {

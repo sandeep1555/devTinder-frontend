@@ -24,7 +24,7 @@ const Requests = () => {
     }
 
     useEffect(() => {
-        viewRequests()
+       !requests && viewRequests()
     }, [])
 
     const approveRequest = async (status, _id) => {
