@@ -48,12 +48,12 @@ const UserCard = ({ user, disabled }) => {
           alt="photo" />
       </figure>
       <div className="card-body">
-        <h2 className="card-title">
+        <h2 className="card-title text-2xl">
           {firstName + " " + lastName}
           {age && <div className="badge badge-secondary">{age}{gender && <span>{"(" + gender[0] + ")"}</span>}</div>}
         </h2>
-        {skills.length > 0 && <h3 className="font-medium">Skills: {skills}</h3>}
-        <p className={isTruncated ? 'truncate' : ''}>About: {about}</p>
+        {skills.length > 0 && <h3 className="font-medium "><span className="font-black">Skills:</span> {skills}</h3>}
+        <p className={isTruncated ? 'truncate' : ''}><span className="font-black">About:</span> {about}</p>
         {isTruncated && about.length >= 45 && (
           <span
             className="text-blue-500 cursor-pointer"
