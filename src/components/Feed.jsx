@@ -26,8 +26,8 @@ const Feed = () => {
   }
 
   useEffect(() => {
-    user ? handleFeedData() : navigate("/login")
-  }, [])
+    !feedData && handleFeedData()
+  }, [feedData])
 
   if (!feedData) return;
   if (feedData.length <= 0) return <h1 className="text-center mt-10">no new users found</h1>
