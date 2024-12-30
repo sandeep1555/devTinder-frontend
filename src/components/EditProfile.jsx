@@ -68,7 +68,7 @@ const EditProfile = ({ user }) => {
     return (
 
 
-        <div className="md:flex md:justify-center md:items-center flex-row justify-center items-center md:my-16 mt-12 mb-10 overflow-y-scroll  ">
+        <div className="md:flex md:justify-center md:items-stretch flex-row justify-center items-center md:my-16 mt-12 mb-10 overflow-y-scroll  ">
 
             <div className='card bg-base-100 w-96 shadow-xl    mb-10  md:mx-8 mx-1 '>
                 <div className="card-body">
