@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addUser } from '../utils/userSlice'
 import Footer from './Footer'
-import axiosInstance from '../context/AuthInterceptor'
+// import axiosInstance from '../context/AuthInterceptor'
 
 const Body = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const Body = () => {
   const fetchUser = async () => {
     if (userData) return;
     try {
-      const res = await axiosInstance.get(BASE_URL + "/profile/view", { withCredentials: true });
+      const res = await axios.get(BASE_URL + "/profile/view", { withCredentials: true });
       dispatch(addUser(res.data.data));
       navigate("/")
 
