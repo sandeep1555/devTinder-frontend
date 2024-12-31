@@ -34,7 +34,7 @@ const Body = () => {
   }
   useEffect(() => {
 
-    fetchUser()
+    userData ? fetchUser() : navigate("/login")
 
   }, [])
   return (
