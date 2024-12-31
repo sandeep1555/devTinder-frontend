@@ -36,7 +36,7 @@ axiosInstance.interceptors.response.use(
       // Token expired or unauthorized
       console.error('Unauthorized access. Please log in again.');
       localStorage.removeItem('authToken'); // Remove token from storage
-      window.location.href = '/login'; // Redirect to login page
+      window.location.href = '/'; // Redirect to login page
     }
     return Promise.reject(error);
   }
