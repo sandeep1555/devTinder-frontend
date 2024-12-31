@@ -1,5 +1,5 @@
 import axios from "axios";
-import {  useState } from "react"
+import {  useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +20,7 @@ const LogIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user)
-  const { logIn } = useAuth();
+  const { logIn,isLoggedIn } = useAuth();
 
 
 
@@ -62,6 +62,13 @@ const LogIn = () => {
     }
   }
 
+  useEffect(() => {
+    if (isLoggedIn()) {
+      navigate("/feed");
+    }
+    
+  }, [isLoggedIn])
+  
  
 
   return (
