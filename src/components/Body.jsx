@@ -41,6 +41,9 @@ const Body = () => {
       fetchUser();
       navigate("/");
     }
+    else{
+      navigate("/login")
+    }
 
   }, [isLoggedIn])
   return (
