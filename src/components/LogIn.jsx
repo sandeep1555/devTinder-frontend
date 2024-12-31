@@ -1,11 +1,11 @@
 import axios from "axios";
-import { useEffect, useState } from "react"
+import {  useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import ErrorIcon from '../assets/icons/error-icon.png';
-// import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 
 
@@ -15,12 +15,12 @@ const LogIn = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [error, setError] = useState("");
-  const [isLoginForm, setIsLoginForm] = useState(false);
+  const [isLoginForm, setIsLoginForm] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user)
-  // const { logIn, authToken } = useAuth();
+  const { logIn } = useAuth();
 
 
 
@@ -30,7 +30,7 @@ const LogIn = () => {
     try {
       const res = await axios.post(BASE_URL + "/login", { emailId, password }, { withCredentials: true })
       dispatch(addUser(res?.data?.data))
-      // logIn(res?.data?.token);
+      logIn(res?.data?.token);
       navigate("/")
 
     }
@@ -50,7 +50,7 @@ const LogIn = () => {
     try {
       const res = await axios.post(BASE_URL + "/signup", { firstName, lastName, emailId, password }, { withCredentials: true })
       dispatch(addUser(res.data.data))
-      // logIn(res?.data?.token);
+      logIn(res?.data?.token);
       navigate("/profile")
     }
     catch (err) {
@@ -62,9 +62,7 @@ const LogIn = () => {
     }
   }
 
-  useEffect(() => {
-    authToken &&  navigate("/");
-  }, [authToken]);
+ 
 
   return (
     <div className={`flex justify-center  ${isLoginForm ? "md:mt-[15vh] mt-[5vh] " : "md:mt-[10vh]   "} `}>
@@ -116,7 +114,15 @@ const LogIn = () => {
               {error}
             </p>
           )}          <div className="card-actions justify-center">
-            <button className="btn btn-primary px-8 my-4" onClick={isLoginForm ? handleLogInButton : handleSignUpButton}>{isLoading ? <span className={`loading loading-spinner loading-md ${isLoginForm ? "mx-[6px]": "mx-[13px]"}`}></span> : isLoginForm ? "LogIn" : "Sign Up"}</button>
+            <button
+              className="btn btn-primary px-8 my-4"
+              onClick={isLoginForm ? handleLogInButton : handleSignUpButton}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <span className="loading loading-spinner loading-md mx-2"></span>
+              ) : isLoginForm ? "LogIn" : "Sign Up"}
+            </button>
 
           </div>
           <p className="my-2">{isLoginForm ? "new user," : "already have account,"}<span className="underline text-blue-500 cursor-pointer" onClick={() => { setIsLoginForm(!isLoginForm); setemailId(""); setPassword(""); setFirstName(""); setLastName(""); setError("") }}>{isLoginForm ? "sign Up" : "LogIn"}</span></p>

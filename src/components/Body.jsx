@@ -7,16 +7,20 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addUser } from '../utils/userSlice'
 import Footer from './Footer'
-// import axiosInstance from '../context/AuthInterceptor'
+import axiosInstance from '../context/AuthInterceptor'
+import { useAuth } from '../context/AuthContext'
 
 const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector((store) => store.user)
+  const {  isLoggedIn } = useAuth();
+
+
   const fetchUser = async () => {
     if (userData) return;
     try {
-      const res = await axios.get(BASE_URL + "/profile/view", { withCredentials: true });
+      const res = await axiosInstance.get(BASE_URL + "/profile/view", { withCredentials: true });
       dispatch(addUser(res.data.data));
       navigate("/")
 
@@ -33,10 +37,12 @@ const Body = () => {
 
   }
   useEffect(() => {
+    if (isLoggedIn()) {
+      fetchUser();
+      navigate("/");
+    }
 
-    userData ? fetchUser() : navigate("/login")
-
-  }, [])
+  }, [isLoggedIn])
   return (
     <div className="flex flex-col min-h-screen">
       <NavBar />

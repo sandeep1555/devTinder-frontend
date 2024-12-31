@@ -4,6 +4,7 @@ import { BASE_URL } from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { addConnections } from '../utils/connectionsSlice'
 import UserCard from './UserCard'
+import axiosInstance from '../context/AuthInterceptor'
 
 const Connections = () => {
 
@@ -21,7 +22,7 @@ const Connections = () => {
 
     const viewConnections = async () => {
         try {
-            const res = await axios.get(BASE_URL + "/user/requests/connected", { withCredentials: true });
+            const res = await axiosInstance.get(BASE_URL + "/user/requests/connected", { withCredentials: true });
             dispatch(addConnections(res.data.data));
 
         }
@@ -35,7 +36,6 @@ const Connections = () => {
        !connections && viewConnections()
     }, [])
 
-    console.log(selectedUser)
 
     return (
         <div className='flex-col justify-center my-4 md:mb-24 mb-36' >

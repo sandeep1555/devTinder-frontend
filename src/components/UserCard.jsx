@@ -3,6 +3,7 @@ import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { removeFeed } from "../utils/feedSlice";
 import { useState } from "react";
+import axiosInstance from "../context/AuthInterceptor";
 
 
 const UserCard = ({ user, disabled }) => {
@@ -21,7 +22,7 @@ const UserCard = ({ user, disabled }) => {
     setIsRequestLoading(status === "interested");
     setIsIgnoreLoading(status === "ignored");
     try {
-      const res = await axios.post(BASE_URL + "/request/send/" + status + "/" + userId, {}, { withCredentials: true })
+      const res = await axiosInstance.post(BASE_URL + "/request/send/" + status + "/" + userId, {}, { withCredentials: true })
       dispatch(removeFeed(userId))
     }
     catch (err) {

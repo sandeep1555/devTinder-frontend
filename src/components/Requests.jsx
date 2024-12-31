@@ -3,6 +3,7 @@ import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 import { addRequests, removeRequests } from "../utils/requestsSlice";
 import { useEffect } from "react";
+import axiosInstance from "../context/AuthInterceptor";
 
 
 const Requests = () => {
@@ -13,7 +14,7 @@ const Requests = () => {
 
     const viewRequests = async () => {
         try {
-            const res = await axios.get(BASE_URL + "/user/requests/received", { withCredentials: true });
+            const res = await axiosInstance.get(BASE_URL + "/user/requests/received", { withCredentials: true });
             dispatch(addRequests(res?.data?.data));
 
         }
