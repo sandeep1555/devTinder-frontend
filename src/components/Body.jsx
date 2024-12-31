@@ -22,12 +22,12 @@ const Body = () => {
     try {
       const res = await axiosInstance.get(BASE_URL + "/profile/view", { withCredentials: true });
       dispatch(addUser(res.data.data));
-      navigate("/")
+      navigate("/feed")
 
     }
     catch (err) {
       if (err.status === 401) {
-        navigate("/login");
+        navigate("/");
       }
 
       console.log(err);
@@ -39,10 +39,10 @@ const Body = () => {
   useEffect(() => {
     if (isLoggedIn()) {
       fetchUser();
-      navigate("/");
+      navigate("/feed");
     }
     else{
-      navigate("/login")
+      navigate("/")
     }
 
   }, [isLoggedIn])

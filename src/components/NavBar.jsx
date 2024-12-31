@@ -24,7 +24,7 @@ const NavBar = () => {
       dispatch(resetFeed());
       dispatch(resetRequest());
       logOut();
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.error("Error during logout:", error);
     }
@@ -33,12 +33,12 @@ const NavBar = () => {
   return (
     <div className="navbar bg-base-300">
       <div className="flex-1">
-        <Link to="/" className="btn btn-ghost text-xl">DevTinder</Link>
+        <Link to="/feed" className="btn btn-ghost text-xl">DevTinder</Link>
       </div>
       <div className="flex-none gap-2">
         {isUserLoggedIn && (
           <>
-            <button className="font-bold text-sm hover:text-gray-600 mr-1 md:text-lg md:mr-6" onClick={() => navigate("/")}>Home</button>
+            <button className="font-bold text-sm hover:text-gray-600 mr-1 md:text-lg md:mr-6" onClick={() => navigate("/feed")}>Home</button>
             <button className="font-bold hover:text-gray-600 text-sm mr-1 md:text-lg md:mr-6 md:block hidden" onClick={() => navigate("/requests")}>Requests</button>
             <button className="font-bold hover:text-gray-600 text-sm mr-1 md:text-lg md:mr-6" onClick={() => navigate("/connections")}>Connections</button>
             <div className='py-3 hidden md:block'>Hi, {user.firstName.length > 10 ? `${user.firstName.slice(0, 10)}...` : user.firstName}</div>
@@ -52,7 +52,7 @@ const NavBar = () => {
               </div>
             </div>
             <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-              <li><Link to="/">Home</Link></li>
+              <li><Link to="/feed">Home</Link></li>
               <li>
                 <Link to="/profile" className="justify-between">
                   Profile
