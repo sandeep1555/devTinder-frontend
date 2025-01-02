@@ -9,7 +9,7 @@ export default {
     extend: {},
   },
   daisyui: {
-    themes: ["wireframe"],
+    themes: ["wireframe","night","dim","business","coffee"],
   },
   plugins: [
     daisyui,
