@@ -51,7 +51,7 @@ const NavBar = () => {
                 <img alt="User Avatar" src={user.photoURL || "https://via.placeholder.com/40"} />
               </div>
             </div>
-            <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+            <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-10 w-52 p-2 shadow ">
               <li><Link to="/feed">Home</Link></li>
               <li>
                 <Link to="/profile" className="justify-between">
