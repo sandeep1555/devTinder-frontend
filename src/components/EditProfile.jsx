@@ -151,7 +151,7 @@ const EditProfile = ({ user }) => {
                 </div>}
 
             </div>
-            <div className="">
+            <div className="mx-4">
                 <UserCard user={user} disabled={true} />
             </div>
 
