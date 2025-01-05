@@ -25,13 +25,14 @@ const Requests = () => {
     }
 
     useEffect(() => {
-       !requests && viewRequests()
+        viewRequests()
     }, [])
 
     const approveRequest = async (status, _id) => {
         try {
             await axios.post(BASE_URL + "/request/review/" + status + "/" + _id, {}, { withCredentials: true });
             dispatch(removeRequests(_id));
+            viewRequests()
         }
         catch (err) {
             console.log(err);
@@ -43,13 +44,13 @@ const Requests = () => {
 
     return (
 
-        <div className='flex-col justify-center my-4 md:mb-24 mb-36 '>
+        <div className='flex-col justify-center my-4 md:mb-24 mb-36  mx-2 md:mx-0'>
             <h1 className='text-3xl text-center my-6'>Requests</h1>
             {requests && (requests.length > 0 ? requests.map((request) => {
                 const { firstName, lastName, photoURL, age, gender, about } = request.fromUserId;
                 return (
-                    <>
-                        <div key={request._id} className='flex justify-center items-center  '>
+                    <div key={request._id}>
+                        <div className='flex justify-center items-center  '>
                             <div className="card card-side bg-base-100 shadow-xl  w-[600px] my-2">
 
                                 <div className="avatar h-[100px]  my-4 mx-2">
@@ -75,7 +76,7 @@ const Requests = () => {
                             </div>
 
                         </div>
-                    </>)
+                    </div>)
 
 
             }) : <div className='flex justify-center'>

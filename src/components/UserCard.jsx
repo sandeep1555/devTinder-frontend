@@ -38,7 +38,6 @@ const UserCard = ({ user, disabled }) => {
   const toggleText = () => {
     setIsTruncated(!isTruncated);
   };
-  console.log(opacity)
   return (<AnimatePresence>
     <motion.div
       drag

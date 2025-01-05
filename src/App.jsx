@@ -7,6 +7,7 @@ import appStore from "./utils/appStore"
 import Feed from "./components/Feed"
 import Connections from "./components/Connections"
 import Requests from "./components/Requests"
+import ChatPage from "./components/ChatPage"
 
 
 function App() {
@@ -18,14 +19,16 @@ function App() {
         <BrowserRouter basename="/">
           <Routes>
 
+
             <Route path="/" element={<Body />}>
+              <Route path="/message/:senderId" element={<ChatPage />} />
               <Route path="/" element={<LogIn />} />
               <Route path="/feed" element={<Feed />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/connections" element={<Connections />} />
+              <Route path="/connections" element={<Connections />}></Route>
               <Route path="/requests" element={<Requests />} />
-
             </Route>
+
           </Routes>
         </BrowserRouter>
       </Provider>

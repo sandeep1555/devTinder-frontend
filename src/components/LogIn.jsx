@@ -31,11 +31,11 @@ const LogIn = () => {
       const res = await axios.post(BASE_URL + "/login", { emailId, password }, { withCredentials: true })
       dispatch(addUser(res?.data?.data))
       logIn(res?.data?.token);
-      navigate("/feed")
+      navigate("/profile")
 
     }
     catch (err) {
-      setError(err.response.data || "something went wrong")
+      setError(err?.response?.data || "something went wrong")
       console.log(err)
 
     }
