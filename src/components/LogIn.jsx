@@ -1,5 +1,5 @@
 import axios from "axios";
-import {  useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +20,9 @@ const LogIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user)
-  const { logIn,isLoggedIn } = useAuth();
+  const { logIn, isLoggedIn } = useAuth();
+  const [checked, setChecked] = useState(false);
+
 
 
 
@@ -66,10 +68,10 @@ const LogIn = () => {
     if (isLoggedIn()) {
       navigate("/feed");
     }
-    
+
   }, [isLoggedIn])
-  
- 
+
+
 
   return (
     <div className={`flex justify-center  ${isLoginForm ? "md:mt-[15vh] mt-[5vh] " : "md:mt-[10vh]   "} `}>
@@ -132,7 +134,12 @@ const LogIn = () => {
             </button>
 
           </div>
-          <p className="my-2">{isLoginForm ? "new user," : "already have account,"}<span className="underline text-blue-500 cursor-pointer" onClick={() => { setIsLoginForm(!isLoginForm); setemailId(""); setPassword(""); setFirstName(""); setLastName(""); setError("") }}>{isLoginForm ? "sign Up" : "LogIn"}</span></p>
+          <p className="my-2">{isLoginForm ? "New User," : "Already have account,"}<span className="underline text-blue-500 cursor-pointer" onClick={() => { setIsLoginForm(!isLoginForm); setemailId(""); setPassword(""); setFirstName(""); setLastName(""); setError("") }}>{isLoginForm ? "Sign Up" : "Log In"}</span></p>
+
+          {isLoginForm && <div className="flex items-center mb-4">
+            <input type="checkbox" defaultChecked className="checkbox" checked={checked} onChange={() => { setChecked(!checked); if (!checked) { setemailId("demo@gmail.com"); setPassword("Demo@123") } else { setemailId(""); setPassword("") } }} />
+            <label className="label-text mx-2">Demo Credentials</label>
+          </div>}
         </div>
       </div>
     </div>

@@ -126,8 +126,8 @@ const ChatPage = () => {
             placeholder="Type a message..."
             className="input input-bordered w-full"
           />
-          <button className="btn btn-primary" onClick={handleSendMessage}>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <button className="btn btn-secondary " onClick={handleSendMessage}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-9.588-5.524a1 1 0 00-1.516.857v11.998a1 1 0 001.516.857l9.588-5.524a1 1 0 000-1.714z" />
             </svg>
           </button>

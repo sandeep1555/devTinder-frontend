@@ -75,16 +75,16 @@ const EditProfile = ({ user }) => {
                     <h2 className="card-title  justify-center mb-8">Edit Profile</h2>
                     <div>
                         <label className="input input-bordered flex items-center gap-4 mb-4">
-                            First Name
+                            First Name:
                             <input type="text" className="grow" placeholder="FirstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                         </label>
                         <label className="input input-bordered flex items-center gap-4 mb-4">
-                            Last Name
+                            Last Name:
                             <input type="text" className="grow" placeholder="LastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
                         </label>
                         <div className="flex gap-4 mb-4">
                             <label className="input input-bordered flex items-center gap-3 grow">
-                                Gender
+                                Gender:
                                 <select
                                     className="grow w-[55px]"
                                     value={gender || ""}
@@ -99,14 +99,14 @@ const EditProfile = ({ user }) => {
                                 </select>
                             </label>
                             <label className="input input-bordered flex items-center gap-2 grow">
-                                Age
+                                Age:
                                 <select
                                     className="grow w-[50px]"
                                     value={age || ""}
                                     onChange={(e) => setAge(e.target.value)}
                                 >
                                     <option value="" disabled>
-                                        Select Age
+                                        Select Age:
                                     </option>
                                     {Array.from({ length: 100 }, (_, i) => i + 18).map((ageValue) => (
                                         <option key={ageValue} value={ageValue}>
@@ -118,16 +118,16 @@ const EditProfile = ({ user }) => {
                         </div>
 
                         <label className="input input-bordered flex items-center gap-4 mb-4">
-                            Photo URL
+                            Photo URL:
                             <input type="text" className="grow" placeholder="Photo URL" value={photoURL} onChange={(e) => setPhotoURL(e.target.value)} />
                         </label>
                         <label className="input input-bordered flex items-center gap-14 mb-4">
-                            Skills
+                            Skills:
                             <input type="text" className="grow" placeholder="Skills" value={skills} onChange={(e) => setSkills(e.target.value)} />
                         </label>
                         <label className="form-control">
                             <div className="label">
-                                <span className="label-text text-[16px]">About</span>
+                                <span className="label-text text-[16px]">About:</span>
 
                             </div>
                             <textarea className="textarea textarea-bordered h-24 " placeholder="About" value={about} onChange={(e) => setAbout(e.target.value)}></textarea>

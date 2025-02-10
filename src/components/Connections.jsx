@@ -57,7 +57,7 @@ const Connections = () => {
                     const { firstName, lastName, photoURL, age, gender, about, skills } = connection;
                     return (
                         <div key={index} className='flex justify-center mb-4' >
-                            <div className="card card-side bg-base-100 shadow-xl md:w-1/2 w-full cursor-default " onClick={() => openModal(connection)}>
+                            <div className="card card-side bg-base-100 shadow-xl md:w-1/2 w-full cursor-default rounded-md " onClick={() => openModal(connection)}>
                                 <div className="avatar   my-4 mx-2">
                                     <div className="w-12 h-12 rounded-full">
                                         <img src={photoURL} />
@@ -69,7 +69,7 @@ const Connections = () => {
                                         {age && `, ${age}`}
                                         {gender && `(${gender[0]})`}
                                     </h2>
-                                    <p className='truncate md:w-[600px]  w-[280px] mt-[-10px] text-sm md:text-lg'>{about}</p>
+                                    <p className='truncate-2-lines w-auto  text-sm md:text-lg'>{about}</p>
                                     <button className='btn btn-primary md:w-[100px] w-[70px] mb-[-20px] text-md md:text-md ' onClick={() => handleConnectionClick(connection)}>Connect</button>
                                 </div>
                             </div>
