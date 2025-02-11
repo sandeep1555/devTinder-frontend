@@ -21,7 +21,7 @@ function App() {
 
 
             <Route path="/" element={<Body />}>
-              <Route path="/message/:senderId" element={<ChatPage />} />
+              <Route path="/message/:targetUserId" element={<ChatPage />} />
               <Route path="/" element={<LogIn />} />
               <Route path="/feed" element={<Feed />} />
               <Route path="/profile" element={<Profile />} />

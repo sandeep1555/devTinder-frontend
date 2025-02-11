@@ -1,62 +1,93 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import axiosInstance from '../context/AuthInterceptor';
-import { useDispatch, useSelector } from 'react-redux';
-import { addMessage, removeMessage } from '../utils/messageSlice';
+import { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { createSocketConnection } from "../utils/socket";
+import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../utils/constants";
-import { senderProfile } from '../utils/senderSlice';
+import axiosInstance from "../context/AuthInterceptor";
+import { removeSenderProfile, senderProfile } from "../utils/senderSlice";
 
 
 const ChatPage = () => {
 
-  const { senderId } = useParams();
-  const navigate = useNavigate()
-  const [content, setContent] = useState("");
-  const user = useSelector((store) => store.user)
+  const { targetUserId } = useParams();
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const user = useSelector((store) => store.user);
+  const userId = user?._id;
   const dispatch = useDispatch()
-  const receiverId = user && user._id;
-  const messages = useSelector((store) => store.message);
-  const senderProfileData = useSelector((store) => store.sender);
-  const chatEndRef = useRef(null);
+  const navigate = useNavigate()
+  const receiverProfileData = useSelector((store) => store.sender);
+  const chatContainerRef = useRef(null);
 
-  const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+
+
+  const fetchChatMessages = async () => {
+    const chat = await axiosInstance.get(BASE_URL + "/message/" + targetUserId, {
+      withCredentials: true,
+    });
+
+    console.log(chat.data.data.messages);
+
+    const chatMessages = chat?.data?.data?.messages.map((msg) => {
+
+      const { senderId, text, createdAt } = msg;
+      return {
+        firstName: senderId?.firstName,
+        lastName: senderId?.lastName,
+        photoURL: senderId?.photoURL,
+        createdAt: createdAt,
+        text,
+      };
+    });
+    setMessages(chatMessages);
   };
-
-  const getAllMessages = async () => {
-
-    try {
-      const res = await axiosInstance.get("/message/" + senderId, { withCredentials: true })
-      dispatch(addMessage(res.data?.data))
-      scrollToBottom();
-    }
-    catch (error) {
-      console.log(error)
-    }
-  }
-
-  const handleSendMessage = async () => {
-    try {
-      if (content === "") {
-        return;
-      }
-      const res = await axiosInstance.post("/message/send/" + senderId, { senderId: senderId, receiverId: receiverId, content: content }, { withCredentials: true })
-      getAllMessages()
-      setContent("")
-    }
-    catch (error) {
-      console.log(error)
-    }
-  }
+  useEffect(() => {
+    fetchChatMessages();
+    getReceiverDetails();
+  }, []);
 
   useEffect(() => {
-    !messages && getAllMessages()
-  }, [])
+    if (!userId) {
+      return;
+    }
+    const socket = createSocketConnection();
+    // As soon as the page loaded, the socket connection is made and joinChat event is emitted
+    socket.emit("joinChat", {
+      firstName: user.firstName,
+      userId,
+      targetUserId,
+    });
+
+    socket.on("messageReceived", ({ firstName, lastName, photoURL, text }) => {
+      console.log(firstName + " :  " + text);
+      setMessages((messages) => [...messages, { firstName, lastName, photoURL, text }]);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [userId, targetUserId]);
+
+  const handleSendMessage = () => {
+    if (newMessage == "") {
+      return;
+    }
+    const socket = createSocketConnection();
+    socket.emit("sendMessage", {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      photoURL: user.photoURL,
+      userId,
+      targetUserId,
+      text: newMessage,
+    });
+    setNewMessage("");
+  };
 
 
-  const getSenderDetails = async () => {
+  const getReceiverDetails = async () => {
     try {
-      const res = await axiosInstance.get(BASE_URL + "/profile/" + senderId);
+      const res = await axiosInstance.get(BASE_URL + "/profile/" + targetUserId);
       dispatch(senderProfile(res?.data?.data));
     }
     catch (error) {
@@ -64,24 +95,21 @@ const ChatPage = () => {
     }
   }
 
-  useEffect(() => {
-    getSenderDetails()
-  }, [])
 
   useEffect(() => {
-    scrollToBottom();
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
   }, [messages]);
 
-
-
-  return user && (
+  return (
     <div className="flex flex-col h-screen ">
       {/* Header */}
       <div className="navbar bg-base-100 shadow-md">
         <div className="flex-none">
           <button
             className="btn btn-square btn-ghost"
-            onClick={() => { navigate("/connections"); dispatch(removeMessage()); }}
+            onClick={() => { navigate("/connections"); setMessages(null); dispatch(removeSenderProfile()) }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
@@ -89,30 +117,30 @@ const ChatPage = () => {
           </button>
         </div>
         <div className="flex-1">
-          <img src={senderProfileData?.photoURL} alt="Profile" className="w-10 h-10 rounded-full object-cover" />
-          <span className="ml-2 font-medium">{senderProfileData && `${senderProfileData.firstName} ${senderProfileData.lastName}`}</span>
+          <img src={receiverProfileData?.photoURL} alt="Profile" className="w-10 h-10 rounded-full object-cover" />
+          <span className="ml-2 font-medium">{receiverProfileData && `${receiverProfileData.firstName} ${receiverProfileData.lastName}`}</span>
         </div>
       </div>
 
       {/* Chat Content */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 mb-12">
+      <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 mb-12">
         {messages && messages.map((msg) => (
           <div
-            key={msg._id}
-            className={`chat ${msg.senderId._id === receiverId ? "chat-end" : "chat-start"}`}
+            key={msg?._id}
+            className={`chat ${user?.firstName === msg.firstName ? "chat-end" : "chat-start"}`}
           >
             <div className="chat-image avatar">
               <div className="w-10 rounded-full">
-                <img src={msg.senderId.photoURL || msg.receiverId.photoURL} alt={`${msg.senderId.firstName || ""} ${msg.senderId.lastName || ""}`} className='object-contain' />
+                <img src={user?.firstName === msg.firstName ? user.photoURL : msg?.photoURL} alt={`${msg.firstName || ""} ${msg.lastName || ""}`} className='object-contain' />
               </div>
             </div>
             <div className="chat-bubble">
-              <p>{msg.content}</p>
-              <small className="chat-footer">{new Date(msg.timeStamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</small>
+              <p>{msg.text}</p>
+              <small className="chat-footer">{msg.createdAt ? new Date(msg?.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "just now"}</small>
             </div>
           </div>
         ))}
-        <div ref={chatEndRef} />
+        <div />
       </div>
 
       {/* Input Area */}
@@ -120,21 +148,19 @@ const ChatPage = () => {
         <div className="flex w-full space-x-2">
           <input
             type="text"
-            value={content}
+            value={newMessage}
             onKeyDown={(e) => { if (e.key === 'Enter') handleSendMessage(); }}
-            onChange={(e) => setContent(e.target.value)}
+            onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Type a message..."
             className="input input-bordered w-full"
           />
           <button className="btn btn-secondary " onClick={handleSendMessage}>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-9.588-5.524a1 1 0 00-1.516.857v11.998a1 1 0 001.516.857l9.588-5.524a1 1 0 000-1.714z" />
-            </svg>
+            Send
           </button>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default ChatPage
