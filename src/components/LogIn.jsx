@@ -137,7 +137,7 @@ const LogIn = () => {
           <p className="my-2">{isLoginForm ? "New User," : "Already have account,"}<span className="underline text-blue-500 cursor-pointer" onClick={() => { setIsLoginForm(!isLoginForm); setemailId(""); setPassword(""); setFirstName(""); setLastName(""); setError("") }}>{isLoginForm ? "Sign Up" : "Log In"}</span></p>
 
           {isLoginForm && <div className="flex items-center mb-4">
-            <input type="checkbox" defaultChecked className="checkbox" checked={checked} onChange={() => { setChecked(!checked); if (!checked) { setemailId("demo@gmail.com"); setPassword("Demo@123") } else { setemailId(""); setPassword("") } }} />
+            <input type="checkbox" defaultChecked className="checkbox" checked={checked} onChange={() => { setChecked(!checked); if (!checked) { setemailId("demo789@gmail.com"); setPassword("Demo@123") } else { setemailId(""); setPassword("") } }} />
             <label className="label-text mx-2">Demo Credentials</label>
           </div>}
         </div>
