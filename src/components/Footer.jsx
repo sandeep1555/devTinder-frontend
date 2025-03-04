@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom"
 
 
 const Footer = () => {
   return (
 
-    <footer className="footer bg-base-200 text-neutral-content items-center p-4">
+    <footer className=" bg-base-200">
+      <div className="footer text-neutral-content items-center p-4">
       <aside className="grid-flow-col items-center">
         <svg
           width="36"
@@ -53,6 +55,15 @@ const Footer = () => {
           </svg>
         </a>
       </nav>
+      </div>
+      <div className="flex  w-1/2 mx-10">
+        <p className="mr-10 footer-title">LEGAL:</p>
+        <Link to={"https://merchant.razorpay.com/policy/PtxZIMyyecfVEq/terms"} className="mr-10 link link-hover">Terms</Link>
+        <Link to={"https://merchant.razorpay.com/policy/PtxZIMyyecfVEq/refund"} className="mr-10 link link-hover">Refund</Link>
+        <Link to={"https://merchant.razorpay.com/policy/PtxZIMyyecfVEq/shipping"} className="mr-10 link link-hover">Shipping</Link>
+        <Link to={"https://merchant.razorpay.com/policy/PtxZIMyyecfVEq/privacy"} className="mr-10 link link-hover">Privacy</Link>
+        <Link to={"https://merchant.razorpay.com/policy/PtxZIMyyecfVEq/contact_us"}>Contact Us</Link>
+      </div>
     </footer>
   )
 }
